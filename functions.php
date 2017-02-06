@@ -22,6 +22,7 @@ class StarterSite extends TimberSite {
 		add_action( 'init', array( $this, 'register_post_types' ) );
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
 		add_action( 'init', array( $this, 'register_my_menu' ) );
+		add_action( 'customize_register', [$this, 'cdtheme_customizer']);
 		parent::__construct();
 	}
 
@@ -73,6 +74,8 @@ class StarterSite extends TimberSite {
 		$context['posts'] = Timber::get_posts();
 		$context['pagination'] = Timber::get_pagination();
 		$context['categories'] = Timber::get_terms('category');
+		$context['theme_options'] = get_theme_mods();
+
 		return $context;
 	}
 
@@ -86,6 +89,99 @@ class StarterSite extends TimberSite {
 		$twig->addExtension( new Twig_Extension_StringLoader() );
 		$twig->addFilter('myfoo', new Twig_SimpleFilter('myfoo', array($this, 'myfoo')));
 		return $twig;
+	}
+
+	/**
+	 * Adds the individual sections, settings, and controls to the theme customizer
+	 */
+	function cdtheme_customizer( $wp_customize ) {
+		$this->set_postal_address_section($wp_customize);
+		$this->set_social_accounts_section($wp_customize);
+
+	}
+
+	function set_postal_address_section($wp_customize) {
+		$defaults = [
+			'CoderDojo Foundation,',
+			'Dogpatch Labs Unit 1,',
+			'The CHQ building,',
+			'Custom House Quay,',
+			'Dublin 1, Ireland'
+		];
+		$wp_customize->add_section(
+			'postal_address',
+				[
+					'title' => 'Postal address',
+					'description' => 'Set your postal address',
+					'priority' => 35,
+				]
+		);
+
+		foreach($defaults as $i => $value) {
+			$wp_customize->add_setting(
+					'postal_line'.($i+1), ['default' => $value]
+			);
+
+			$wp_customize->add_control(
+				'postal_line'.($i+1),
+				[
+					'label' => 'Line '.($i+1),
+					'section' => 'postal_address',
+					'type' => 'text',
+				]
+			);
+		}
+	}
+
+	function set_social_accounts_section($wp_customize) {
+		$accounts = [
+			[
+				'label' => 'Twitter',
+				'slug' => 'twitter',
+				'default' => ''
+			],
+			[
+				'label' => 'Facebook',
+				'slug' => 'facebook',
+				'default' => ''
+			],
+			[
+				'label' => 'Google+',
+				'slug' => 'googleplus',
+				'default' => ''
+			],
+			[
+				'label' => 'LinkedIn',
+				'slug' => 'linkedin',
+				'default' => ''
+			],
+			[
+				'label' => 'Contact page',
+				'slug' => 'contact_url',
+				'default' => '/contact'
+			],
+		];
+		$wp_customize->add_section(
+			'social_accounts',
+			[
+				'title' => 'Social accounts',
+				'description' => 'Leave empty to hide',
+				'priority' => 36,
+			]
+		);
+
+		foreach($accounts as $account) {
+			$wp_customize->add_setting('online_'.$account['slug'], ['default' => $account['default']]);
+
+			$wp_customize->add_control(
+				'online_'.$account['slug'],
+				[
+					'label' => $account['label'],
+					'section' => 'social_accounts',
+					'type' => 'text',
+				]
+			);
+		}
 	}
 
 }
