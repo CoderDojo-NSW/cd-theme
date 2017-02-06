@@ -6,42 +6,53 @@
       </svg>
     </div>
     <div class="col-sm-3">
-      <p class="cd-footer__address-line">CoderDojo Foundation,</p>
-      <p class="cd-footer__address-line">Dogpatch Labs Unit 1,</p>
-      <p class="cd-footer__address-line">The CHQ building,</p>
-      <p class="cd-footer__address-line">Custom House Quay,</p>
-      <p class="cd-footer__address-line">Dublin 1, Ireland</p>
+      <p class="cd-footer__address-line">{{ theme_options.postal_line1 | default('CoderDojo Foundation,') }}</p>
+      <p class="cd-footer__address-line">{{ theme_options.postal_line2 | default('Dogpatch Labs Unit 1,') }}</p>
+      <p class="cd-footer__address-line">{{ theme_options.postal_line3 | default('The CHQ building,') }}</p>
+      <p class="cd-footer__address-line">{{ theme_options.postal_line4 | default('Custom House Quay,') }}</p>
+      <p class="cd-footer__address-line">{{ theme_options.postal_line5 | default('Dublin 1, Ireland') }}</p>
     </div>
     <div class="col-sm-3 col-sm-offset-3">
       <p><a href="/newsletter">Sign Up For Newsletter</a></p>
       <p><a href="https://www.flickr.com/photos/helloworldfoundation/">Photos and Videos</a></p>
       <p><a href="https://zen.coderdojo.com/privacy-statement">Privacy Statement</a></p>
       <p class="cd-footer__social-icons">
-        <a href="https://twitter.com/coderdojo" target="_blank">
+        {% if theme_options.online_twitter %}
+        <a href="https://twitter.com/{{ theme_options.online_twitter }}" target="_blank">
           <span class="fa-stack fa-lg">
             <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
             <i class="fa fa-twitter fa-stack-1x cd-footer__social-icons__icon" aria-hidden="true"></i>
           </span>
         </a>
-        <a href="https://facebook.com/coderdojo" target="_blank">
+        {% endif %}
+        {% if theme_options.online_facebook %}
+
+        <a href="https://facebook.com/{{ theme_options.online_facebook }}" target="_blank">
           <span class="fa-stack fa-lg">
             <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
             <i class="fa fa-facebook fa-stack-1x cd-footer__social-icons__icon" aria-hidden="true"></i>
           </span>
         </a>
-        <a href="https://plus.google.com/+coderdojo" target="_blank">
+        {% endif %}
+        {% if theme_options.online_googleplus %}
+
+        <a href="https://plus.google.com/+{{ theme_options.online_googleplus }}" target="_blank">
           <span class="fa-stack fa-lg">
             <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
             <i class="fa fa-google-plus fa-stack-1x cd-footer__social-icons__icon" aria-hidden="true"></i>
           </span>
         </a>
-        <a href="https://www.linkedin.com/company/coderdojo" target="_blank">
+        {% endif %}
+        {% if theme_options.online_linkedin %}
+
+        <a href="https://www.linkedin.com/company/{{ theme_options.online_linkedin }}" target="_blank">
           <span class="fa-stack fa-lg">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-linkedin fa-stack-1x cd-footer__social-icons__icon"></i>
           </span>
         </a>
-        <a href="https://www.coderdojo.com/contact/">
+        {% endif %}
+        <a href="{{ site.url }}{{ theme_options.online_contact_url | default('/contact') }}/">
           <span class="fa-stack fa-lg">
             <i class="fa fa-circle fa-stack-2x" aria-hidden="true"></i>
             <i class="fa fa-envelope fa-stack-1x cd-footer__social-icons__icon" aria-hidden="true"></i>
