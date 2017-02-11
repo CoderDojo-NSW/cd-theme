@@ -101,12 +101,32 @@ class StarterSite extends TimberSite {
 	}
 
 	function set_postal_address_section($wp_customize) {
-		$defaults = [
-			'CoderDojo Foundation,',
-			'Dogpatch Labs Unit 1,',
-			'The CHQ building,',
-			'Custom House Quay,',
-			'Dublin 1, Ireland'
+		$fields = [
+			[
+				'label' => 'Addressee',
+				'default' => 'CoderDojo Foundation,',
+				'slug' => 'postal_addressee',
+			],
+			[
+				'label' => 'Line one',
+				'default' => 'Dogpatch Labs Unit 1,',
+				'slug' => 'postal_line1',
+			],
+			[
+				'label' => 'Line two',
+				'default' => 'The CHQ building,',
+				'slug' => 'postal_line2',
+			],
+			[
+				'label' => 'Line three',
+				'default' => 'Custom House Quay,',
+				'slug' => 'postal_line3',
+			],
+			[
+				'label' => 'Line four',
+				'default' => 'Dublin 1, Ireland',
+				'slug' => 'postal_line4',
+			],
 		];
 		$wp_customize->add_section(
 			'postal_address',
@@ -117,15 +137,15 @@ class StarterSite extends TimberSite {
 				]
 		);
 
-		foreach($defaults as $i => $value) {
+		foreach($fields as $field) {
 			$wp_customize->add_setting(
-					'postal_line'.($i+1), ['default' => $value]
+					$field['slug'], ['default' => $field['default']]
 			);
 
 			$wp_customize->add_control(
-				'postal_line'.($i+1),
+				$field['slug'],
 				[
-					'label' => 'Line '.($i+1),
+					'label' => $field['label'],
 					'section' => 'postal_address',
 					'type' => 'text',
 				]
