@@ -22,7 +22,7 @@ class StarterSite extends TimberSite {
 		add_action( 'init', array( $this, 'register_post_types' ) );
 		add_action( 'init', array( $this, 'register_taxonomies' ) );
 		add_action( 'init', array( $this, 'register_my_menu' ) );
-		add_action( 'customize_register', [$this, 'cdtheme_customizer']);
+		add_action( 'customize_register', array($this, 'cdtheme_customizer'));
 		parent::__construct();
 	}
 
@@ -101,105 +101,104 @@ class StarterSite extends TimberSite {
 	}
 
 	function set_postal_address_section($wp_customize) {
-		$fields = [
-			[
+		$fields = array(
+			array(
 				'label' => 'Addressee',
 				'default' => 'CoderDojo Foundation,',
 				'slug' => 'postal_addressee',
-			],
-			[
+			),
+			array(
 				'label' => 'Line one',
 				'default' => 'Dogpatch Labs Unit 1,',
 				'slug' => 'postal_line1',
-			],
-			[
+			),
+			array(
 				'label' => 'Line two',
 				'default' => 'The CHQ building,',
 				'slug' => 'postal_line2',
-			],
-			[
+			),
+			array(
 				'label' => 'Line three',
 				'default' => 'Custom House Quay,',
 				'slug' => 'postal_line3',
-			],
-			[
+			),
+			array(
 				'label' => 'Line four',
 				'default' => 'Dublin 1, Ireland',
 				'slug' => 'postal_line4',
-			],
-		];
+			),
+		);
 		$wp_customize->add_section(
 			'postal_address',
-				[
+				array(
 					'title' => 'Postal address',
 					'description' => 'Set your postal address',
 					'priority' => 35,
-				]
+				)
 		);
 
 		foreach($fields as $field) {
-			$wp_customize->add_setting(
-					$field['slug'], ['default' => $field['default']]
+			$wp_customize->add_setting($field['slug'], array('default' => $field['default'])
 			);
 
 			$wp_customize->add_control(
 				$field['slug'],
-				[
+				array(
 					'label' => $field['label'],
 					'section' => 'postal_address',
 					'type' => 'text',
-				]
+				)
 			);
 		}
 	}
 
 	function set_social_accounts_section($wp_customize) {
-		$accounts = [
-			[
+		$accounts = array(
+			array(
 				'label' => 'Twitter',
 				'slug' => 'twitter',
 				'default' => ''
-			],
-			[
+			),
+			array(
 				'label' => 'Facebook',
 				'slug' => 'facebook',
 				'default' => ''
-			],
-			[
+			),
+			array(
 				'label' => 'Google+',
 				'slug' => 'googleplus',
 				'default' => ''
-			],
-			[
+			),
+			array(
 				'label' => 'LinkedIn',
 				'slug' => 'linkedin',
 				'default' => ''
-			],
-			[
+			),
+			array(
 				'label' => 'Contact page',
 				'slug' => 'contact_url',
 				'default' => '/contact'
-			],
-		];
+			),
+		);
 		$wp_customize->add_section(
 			'social_accounts',
-			[
+			array(
 				'title' => 'Social accounts',
 				'description' => 'Leave empty to hide',
 				'priority' => 36,
-			]
+			)
 		);
 
 		foreach($accounts as $account) {
-			$wp_customize->add_setting('online_'.$account['slug'], ['default' => $account['default']]);
+			$wp_customize->add_setting('online_'.$account['slug'], array('default' => $account['default']));
 
 			$wp_customize->add_control(
 				'online_'.$account['slug'],
-				[
+				array(
 					'label' => $account['label'],
 					'section' => 'social_accounts',
 					'type' => 'text',
-				]
+				)
 			);
 		}
 	}
