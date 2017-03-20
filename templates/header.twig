@@ -4,7 +4,7 @@
       <a href="/">
         <img src="{{ site.theme.link }}/static/img/coderdojo/coderdojo-logo-light-bg.svg" width="120" height="44" />
       </a>
-      <a href="/donate/" class="cd-menu__donate-button">Donate</a>
+      {#<a href="/donate/" class="cd-menu__donate-button">Donate</a>#}
       <form class="cd-menu__search" role="search" action="{{site.home}}">
         <input class="cd-menu__search-input" type="text" placeholder="Search..." name="s" />
         <button class="cd-menu__search-button" type="submit"><span class="fa fa-search fa-2x"></span></button>
@@ -136,7 +136,7 @@
             <li><a href="{{item.get_link}}">{{item.title}}</a></li>
           {% endif %}
         {% endfor %}
-        <li><a href="/donate/">Donate</a></li>
+        {#<li><a href="/donate/">Donate</a></li>#}
       </ul>
     </div>
   </nav>
